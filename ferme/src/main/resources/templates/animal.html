@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+    <title>La Ferme 2.0 - Animal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+  th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+  rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+  th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+     <link href="../static/css/custom.css"
+          th:href="@{css/custom.css}" rel="stylesheet" media="screen"/>  
+
+<body>
+<h1 class= "text-center">Ferme 2.0</h1>
+                                                       
+<table class="table table-condensed table-striped table-bordered table-hover">
+  <!-- Header Table -->
+       <thead>
+            <tr>
+                <th scope="row">Id</th>
+                <th scope="row">Type Animal</th>
+                <th scope="row">Nouriture Consomme</th>
+                <th scope="row">Adresse</th>
+            </tr>
+        </thead>
+   <th:block th:each="animal : ${listanimal}" th:if="${not #lists.isEmpty(listanimal)}">
+      <tr>
+         <td th:text="${animal.id}">...</td>
+         <td th:text="${animal.type.nom}">...</td>
+         <td th:text="${animal.nourritureConsomme}">...</td>
+         <td colspan="2" th:text="${animal.ferme?.adresse}">...</td>
+      </tr>
+      
+   </th:block>
+   
+   <th:block  th:if="${animal != null}">
+      <tr>
+         <td th:text="${animal.id}">...</td>
+         <td th:text="${animal.type.nom}">...</td>
+         <td th:text="${animal.nourritureConsomme}">...</td>
+         <td colspan="2" th:text="${animal.ferme?.adresse}">...</td>
+      </tr>
+      
+   </th:block>
+   
+   
+</table>
+</body>
+</html>

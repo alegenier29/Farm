@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+    <title>La Ferme 2.0 - Nourrir Animal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+  th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+  rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+  th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+     <link href="../static/css/custom.css"
+          th:href="@{css/custom.css}" rel="stylesheet" media="screen"/>  
+
+ <body>
+    <div>
+     <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/nourrirAnimal">Nourrir Animal</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/">Home</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hero-unit">
+        <h1 class= "text-center">Nourrir Animal</h1>       
+        
+        <h2>Formulaire Nourrir Animal</h2>
+    <div>
+    
+      <form class="form-horizontal" th:object="${ferme}" th:action="@{/nourrirAnimal}" method="post">
+        <!-- Sélectionner  le ferme pour nourrir les animaux  -->          
+          <div class="form-group">
+        		<div class="col-sm-10">
+  		  			<select class="form-control"  name="ferme_id">
+        				<option th:each="ferm : ${listfermes}"
+                			th:value="${ferm.id}" 
+                			th:text="${ferm.ferme_nom}"
+                			th:selected="${ferm.id.equals(1)}"  />
+    				</select>
+    	
+    	    </div>	
+     	
+     	 <div class="col-sm-2">
+                <button type="submit"  class="btn btn-default"  name="action" value="search">Chercher Ferme</button>
+            </div>
+          
+            
+         </div>
+        
+     <table class="table table-condensed table-striped table-bordered table-hover">
+          <!-- Header Table -->
+          <thead>
+            <tr>
+                <th scope="row">Id Ferme</th>
+                <th scope="row">Nom Ferme</th>
+                <th scope="row">Adresse</th>
+                <th scope="row">Nom Fermier</th>
+                <th scope="row">Animaux</th>
+            </tr>
+        </thead>
+          <th:block th:each="ferme : ${fermes}">
+      <tr>
+         <td th:text="${ferme.id}">...</td>
+         <td th:text="${ferme.ferme_nom}">...</td>
+         <td th:text="${ferme.adresse}">...</td>
+         <td th:text="${ferme.fermier?.nom}">...</td>
+         <td>
+         	<ul>
+				<th:block th:each="animal : ${ferme.animaux}">
+             		<li th:text="${animal.type.nom}">...</li>
+             		<li th:text="${animal.nourritureConsomme}" >...</li>
+         			<ul>
+						<th:block th:each="nourritureAnimal : ${animal.nourriture}">
+		             		<li th:text="${nourritureAnimal.id.nourriture.nourrituretype.nom}">...</li>
+		             		<li th:text="${nourritureAnimal.quantite}"  >...</li>
+		           		</th:block>
+		          	</ul>
+          		</th:block>
+         	</ul>
+		</td>
+      </tr>
+      
+   </th:block>
+</table>
+     <div class="col-sm-2">
+                <button type="submit"  class="btn btn-default" name="action" value="nourrir">Mange toute la nourriture</button>
+            </div>
+        </form>
+        </div>
+      
+      
+      
+                      
+   </div>
+</div>
+                                                       
+</body>
+</html>
